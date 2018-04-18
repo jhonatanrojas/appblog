@@ -12,10 +12,10 @@ Crear Usuario
 
 
 <div class="page-header" style="text-align: center">
-      <h1>Crear Categoria</h1>
+      <h1>Editar Categoria {{$categoria->name}}</h1>
     </div>
    
-{!! Form::open(['route'=>'categorias.store','method'=>'POST'])  !!}
+    {!! Form::model($categoria,array('route'=>['categorias.update',$categoria->id],'method'=>'PUT')) !!}
  <div class="tab-content p-y-4">
 
       <!-- Profile tab -->
@@ -37,14 +37,14 @@ Crear Usuario
        
 <div class="form-group">
   <label>Nombre Categoria</label>
-{!! Form::text('name', null,['class'=>'form-control','placeholder'=>'Ingrese Categoria'])  !!}
+{!! Form::text('name', $categoria->name,['class'=>'form-control','placeholder'=>'Ingrese Categoria'])  !!}
 </div>
 
             </div>
 
            <div class="row">       
                  <div class="col-md-3 col-lg-offset-3">   
-{!! Form::submit('Registrar',['class'=>'btn btn-lg btn-primary m-t-3'])  !!}
+{!! Form::submit('Modificar',['class'=>'btn btn-lg btn-primary m-t-3'])  !!}
 {!! Form::close() !!}
   </div>
   </div>

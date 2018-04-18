@@ -74,6 +74,8 @@ return back()->with('error', 'Ocurrio un Error al registrar Esta Categoria');
     public function edit($id)
     {
         //
+        $categoria=Categoria::find($id);
+        return view('admin.categorias.edit')->with('categoria',$categoria);
     }
 
     /**
@@ -86,6 +88,20 @@ return back()->with('error', 'Ocurrio un Error al registrar Esta Categoria');
     public function update(Request $request, $id)
     {
         //
+        $categoria= categoria::find($id);
+        $categoria->fill($request->all());
+       
+   if($categoria->save()){ 
+   
+   
+    return redirect()->route('categorias.index')->with('msj', 'Categoria '. $categoria->name . ' Modificada Exitosamente');
+       }else{
+   
+           return back()->with('error', 'Ocurrio un Error al Modificar Esta Categoria');
+   
+   
+       }
+
     }
 
     /**
@@ -98,6 +114,16 @@ return back()->with('error', 'Ocurrio un Error al registrar Esta Categoria');
     {
         //
 
-        dd($id);
+
+        $categoria = Categoria::find($id);
+        if( $categoria->delete()){ 
+
+            return back()->with('msj', 'Categoria '. $categoria->name . ' Eliminado Exitosamente');
+                }else{
+            
+                    return back()->with('error', 'Ocurrio un  al Eliminar este');
+            
+                }
+            
     }
 }

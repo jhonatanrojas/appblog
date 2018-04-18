@@ -31,7 +31,7 @@ Route::get('users/{id}/destroy',[
 
  Route::get('categorias/{id}/destroy',[
 'uses'=> 'CategoriaController@destroy',
-'as' => 'admin.categoria.destroy'
+'as' => 'admin.categorias.destroy'
 ]);
 /*
 Route::get('view/{id}',[
