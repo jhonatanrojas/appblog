@@ -15,10 +15,12 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        //
+       
 
-        $categorias = categoria::orderBy('id', 'DESC')->paginate(10);
-          return view('admin.categorias.index')->with('categorias',$categorias);
+            $categorias = Categoria::orderBy('id', 'DESC')->paginate(10);
+            return view('admin.categorias.index')->with('categorias',$categorias);
+
+        
     }
 
     /**

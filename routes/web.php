@@ -33,6 +33,14 @@ Route::get('users/{id}/destroy',[
 'uses'=> 'CategoriaController@destroy',
 'as' => 'admin.categorias.destroy'
 ]);
+
+
+Route::resource('tags','TagsController');
+
+Route::get('tags/{id}/destroy',[
+'uses'=> 'TagsController@destroy',
+'as' => 'admin.tags.destroy'
+]);
 /*
 Route::get('view/{id}',[
 'uses'=> 'PruebaController@show',
@@ -40,3 +48,6 @@ Route::get('view/{id}',[
 ]);
 */
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

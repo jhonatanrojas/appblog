@@ -16,4 +16,10 @@ class Tag extends Model
 return $this->belongsToMany('App\Articulo')->withTimestamps();
 
     }
+
+    public function scopeSearh($query,$name){
+
+            return $query->where('name','LIKE',"%$name%");
+    }
+
 }

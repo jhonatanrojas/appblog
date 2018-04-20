@@ -9,12 +9,29 @@
     </button>
 
     <ul class="px-nav-content">
-      <li class="px-nav-item active">
-        <a href="{{route('users.create')}}"><i class="px-nav-icon ion-home"></i><span class="px-nav-label">Registrar Usuario</span></a>
-      </li>
-      <li class="px-nav-item">
-        <a href="{{route('users.index')}}"><i class="px-nav-icon ion-star"></i><span class="px-nav-label">Consultar Usuario</span></a>
-      </li>
+      
+      <li class="px-nav-item px-nav-dropdown">
+          <a href="#"><i class="px-nav-icon ion-person-stalker"></i><span class="px-nav-label">Usuarios</span></a>
+  
+          <ul class="px-nav-dropdown-menu">
+            <li class="px-nav-item"><a href="{{route('users.create')}}"><span class=""><i class="fa fa-address-card" aria-hidden="true"> Registrar</i> </span></a></li>
+            <li class="px-nav-item"><a href="{{route('users.index')}}"><span class="px-nav-label"> <i class="fa fa-search" aria-hidden="true">Consultar</i></span></a></li>
+  
+          </ul>
+        </li>
+      
+
+              
+      <li class="px-nav-item px-nav-dropdown">
+          <a href="#"><i class="px-nav-icon ion-monitor"></i><span class="px-nav-label">Categorias</span></a>
+  
+          <ul class="px-nav-dropdown-menu">
+            <li class="px-nav-item"><a href="{{route('categorias.create')}}"><span class=""> <i class="fa fa-address-card" aria-hidden="true">Registrar</i>
+              </span></a></li>
+            <li class="px-nav-item"><a href="{{route('categorias.index')}}"><span class="px-nav-label" > <i class="fa fa-search" aria-hidden="true">Consultar</i></span></a></li>
+  
+          </ul>
+        </li>
     </ul>
   </nav>
 

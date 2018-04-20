@@ -17,9 +17,13 @@ class AddImagenesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('articulos_id')->unsigned();
-            $table->foreign('articulos_id')->references('id')->on('articulos')->onDelete('cascade');
+
 
             $table->timestamps();
+        });
+
+        Schema::table('imagenes', function($table) {
+            $table->foreign('articulos_id')->references('id')->on('articulos')->onDelete('cascade');
         });
     }
 
