@@ -35,6 +35,10 @@ Route::get('users/{id}/destroy',[
 ]);
 
 
+
+Route::resource('articulos','ArticulosController');
+
+
 Route::resource('tags','TagsController');
 
 Route::get('tags/{id}/destroy',[

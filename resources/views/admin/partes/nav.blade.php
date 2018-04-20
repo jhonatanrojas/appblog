@@ -9,7 +9,7 @@
     </button>
 
     <ul class="px-nav-content">
-      
+        <!-- USUARIOS -->
       <li class="px-nav-item px-nav-dropdown">
           <a href="#"><i class="px-nav-icon ion-person-stalker"></i><span class="px-nav-label">Usuarios</span></a>
   
@@ -21,7 +21,7 @@
         </li>
       
 
-              
+                <!--CATEGORIAS -->
       <li class="px-nav-item px-nav-dropdown">
           <a href="#"><i class="px-nav-icon ion-monitor"></i><span class="px-nav-label">Categorias</span></a>
   
@@ -29,6 +29,39 @@
             <li class="px-nav-item"><a href="{{route('categorias.create')}}"><span class=""> <i class="fa fa-address-card" aria-hidden="true">Registrar</i>
               </span></a></li>
             <li class="px-nav-item"><a href="{{route('categorias.index')}}"><span class="px-nav-label" > <i class="fa fa-search" aria-hidden="true">Consultar</i></span></a></li>
+  
+          </ul>
+        </li>
+
+                <!-- TAG -->   
+      <li class="px-nav-item px-nav-dropdown">
+          <a href="#"><i class="px-nav-icon ion-ios-pricetag"></i><span class="px-nav-label">Tags</span></a>
+  
+          <ul class="px-nav-dropdown-menu">
+            <li class="px-nav-item"><a href="{{route('tags.index')}}"><span class=""> <i class="fa fa-address-card" aria-hidden="true">Registrar</i>
+              </span></a></li>
+  
+          </ul>
+        </li>
+
+                    <!-- ARTICULOS -->   
+      <li class="px-nav-item px-nav-dropdown">
+          <a href="#"><i class="px-nav-icon ion-chatboxes"></i><span class="px-nav-label">Articulos</span></a>
+  
+          <ul class="px-nav-dropdown-menu">
+            <li class="px-nav-item"><a href="{{route('tags.index')}}"><span class=""> <i class="fa fa-address-card" aria-hidden="true">Registrar</i>
+              </span></a></li>
+  
+          </ul>
+        </li>
+
+                            <!-- IMAGENES -->   
+      <li class="px-nav-item px-nav-dropdown">
+          <a href="#"><i class="px-nav-icon ion-ios-camera"></i><span class="px-nav-label">Imagenes</span></a>
+  
+          <ul class="px-nav-dropdown-menu">
+            <li class="px-nav-item"><a href="{{route('tags.index')}}"><span class=""> <i class="fa fa-address-card" aria-hidden="true">Registrar</i>
+              </span></a></li>
   
           </ul>
         </li>
