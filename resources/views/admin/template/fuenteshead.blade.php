@@ -9,6 +9,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('tema/css/pixeladmin.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('tema/css/themes/asphalt.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('plugin/chosen/chosen.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('plugin/Trumbo/ui/trumbowyg.min.css')}}">
+
 
       <!-- Theme -->
 

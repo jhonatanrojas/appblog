@@ -8,6 +8,7 @@ use App\Categoria;
 use App\Articulo;
 use App\Imagen;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ArticuloRequest;
 
 class ArticulosController extends Controller
 {
@@ -19,8 +20,21 @@ class ArticulosController extends Controller
     public function index()
     {
         //
+        $articulos = Articulo::orderBy('id','DESC')->paginate(5);
+        $articulos->each(function($articulos){
+        $articulos->categoria;
+         $articulos->user;
+     $articulos->tags;
+  
+        });
+
+ 
+
+        return view('admin.articulos.index')
+        ->with('articulos',$articulos);
     }
 
+  
     /**
      * Show the form for creating a new resource.
      *
@@ -33,7 +47,7 @@ class ArticulosController extends Controller
 
      
 
-       return view('admin.articulos.create')
+       return view('admin.articulos.index')
            -> with('categoria',$categoria)
            ->with('tags',$tags);
 
@@ -45,36 +59,39 @@ class ArticulosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ArticuloRequest $request)
     {
+
+
+        $articulo=new Articulo ($request->all());
+        $iduser = Auth::user()->id;
+        $articulo->user_id =  $iduser;
+
+
+        $articulo->save();
+        $articulo->tags()->sync($request->tags);
 
 
 
         if($request->file('image'))
         { 
+
             $file =$request->file('image');
             $name = 'imagen_'. time() . '.' . $file->getClientOriginalName();
-            //$nameimagen = str_random(30) . '-' . $request->file('image')->getClientOriginalName();
+        $nameimagen = str_random(30) . '-' . $request->file('image')->getClientOriginalName();
             $path = public_path() . '/imagenes/articulos';
-           // $file->move($path,$name);
-
-        }
-
-
-            $articulo=new Articulo ($request->all());
-            $iduser = Auth::user()->id;
-            $articulo->user_id =  $iduser;
-
-
-            $articulo->save();
-            $articulo->tags()->sync($request->tags);
-
+          $file->move($path,$name);
             $imagen = new Imagen();
             $imagen->name= $name;
             $imagen-> articulo()->associate($articulo);
-          $imagen->save(); 
+            $imagen->save(); 
+       
 
+        }
+            
           
+
+      
         if($articulo->save()){ 
 
             return redirect()->route('articulos.create')->with('msj', 'Articulo ' .   $articulo->titulo. ' Publicado Exitosamente');

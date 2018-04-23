@@ -52,7 +52,7 @@ Articulos
     </div>
 <div class="form-group">
 
-{!! Form::textarea('contenido', null,['class'=>'form-control','placeholder'=>'Contenido'])  !!}
+{!! Form::textarea('contenido', null,['class'=>'form-control trumbowyg','placeholder'=>'Contenido'])  !!}
 </div>
 
 

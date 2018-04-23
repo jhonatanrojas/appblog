@@ -9,6 +9,10 @@
    
     <title>@yield('title','Default')| Jhonatan</title>
 
+    <section> 
+        @yield('cssblog')
+    
+        </section>
 
     @include('admin.template.fuenteshead')
 
@@ -41,11 +45,18 @@
 <script src="{{ asset('js/pace.min.js') }}"></script>
 <script src="{{ asset('plugin/chosen/chosen.jquery.js') }}"></script>
 <script src="{{ asset('tema/js/pixeladmin.min.js') }}"></script>
+
+<script src="{{ asset('plugin/Trumbo/trumbowyg.min.js') }}"></script>
+
+
+
 <script> 
     $(".chosen").chosen({
       max_selected_options: 3
     });
   
+    $('.trumbowyg').trumbowyg();
+
       </script>
 </body>
 </html>
