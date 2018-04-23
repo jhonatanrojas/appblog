@@ -26,7 +26,7 @@
           <a href="#"><i class="px-nav-icon ion-monitor"></i><span class="px-nav-label">Categorias</span></a>
   
           <ul class="px-nav-dropdown-menu">
-            <li class="px-nav-item"><a href="{{route('categorias.create')}}"><span class=""> <i class="fa fa-address-card" aria-hidden="true">Registrar</i>
+            <li class="px-nav-item"><a href="{{route('categorias.index')}}"><span class=""> <i class="fa fa-address-card" aria-hidden="true">Registrar</i>
               </span></a></li>
             <li class="px-nav-item"><a href="{{route('categorias.index')}}"><span class="px-nav-label" > <i class="fa fa-search" aria-hidden="true">Consultar</i></span></a></li>
   
@@ -49,7 +49,7 @@
           <a href="#"><i class="px-nav-icon ion-chatboxes"></i><span class="px-nav-label">Articulos</span></a>
   
           <ul class="px-nav-dropdown-menu">
-            <li class="px-nav-item"><a href="{{route('tags.index')}}"><span class=""> <i class="fa fa-address-card" aria-hidden="true">Registrar</i>
+            <li class="px-nav-item"><a href="{{route('articulos.create')}}"><span class=""> <i class="fa fa-address-card" aria-hidden="true">Registrar</i>
               </span></a></li>
   
           </ul>

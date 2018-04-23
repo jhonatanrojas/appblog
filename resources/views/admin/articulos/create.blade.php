@@ -38,12 +38,11 @@ Articulos
  
             <div class="p-x-1">
      
-
-              {!! Form::open(array('route'=>['articulos.store'],'method'=>'POST')) !!}
+      
  
 <div class="form-group">
   <label> Titulo</label>
-{!! Form::text('titulo', null,['class'=>'form-control','placeholder'=>'Titulo del articulos'])  !!}
+{!! Form::open(['route'=>'articulos.store','method'=>'POST','files'=>true ] )!!}
 </div>
 
 <div class="form-group">
@@ -64,6 +63,7 @@ Articulos
           </div>
 
                           <div class="form-group">
+                          {!! Form::label('image','imagen')!!}
                               {!! Form::file('image') !!}
                   
                         </div>

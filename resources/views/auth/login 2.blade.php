@@ -79,19 +79,18 @@
                            
 
             <div class="box-cell col-md-7">
+              
 
-                {!! Form::open(['route'=>'login','method'=>'POST'])  !!}
-
-
+   <form action="POST" class="p-a-4" action="{{route('login')}}" id="page-signin-form">
                 
+                 <input name="_method" type="hidden" value="PATCH"> 
                 <h4 class="m-t-0 m-b-4 text-xs-center font-weight-semibold">Sign In to your Account</h4>
                 <fieldset class="page-signin-form-group form-group form-group-lg">
                   <div class="page-signin-icon text-muted"><i class="ion-person"></i></div>
-                  
-           
-    {!! Form::email('email', null,['class'=>'form-control','placeholder'=>'email'])  !!}
-
-                
+                  <input type="text"
+                   name="name" 
+                   class="page-signin-form-control form-control"
+                    placeholder="Username or Email">
 
                         @if ($errors->has('email'))
                                     <span class="invalid-feedback">
@@ -102,9 +101,10 @@
 
                 <fieldset class="page-signin-form-group form-group form-group-lg">
                   <div class="page-signin-icon text-muted"><i class="ion-asterisk"></i></div>
-           
-{!! Form::password('password', ['class'=>'form-control','placeholder'=>'clave'])  !!}
-
+                  <input type="password"
+                   name="password" 
+                   class="page-signin-form-control form-control"
+                    placeholder="Password">
 
                      @if ($errors->has('password'))
                                     <span class="invalid-feedback">
@@ -121,10 +121,10 @@
                   </label>
                   <a href="#" class="font-size-12 text-muted pull-xs-right" id="page-signin-forgot-link">Forgot your password?</a>
                 </div>
-{!! Form::submit('Iniciar Sesión',['class'=>'btn btn-lg btn-primary m-t-3'])  !!}
-{!! Form::close() !!}
+
+                <button type="submit" class="btn btn-block btn-lg btn-primary m-t-3">Sign In</button>
                                                  
-        
+              </form>
 
               <div class="p-y-3 p-x-4 b-t-1 bg-white darken" id="page-signin-social">
                 <a href="index.html" class="btn btn-block btn-lg btn-info font-size-13"><span class="btn-label-icon left fa fa-twitter"></span>Sign In with <strong>Twitter</strong></a>

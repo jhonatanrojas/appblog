@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Tag;
 use App\Categoria;
-
+use App\Articulo;
 class ArticulosController extends Controller
 {
     /**
@@ -44,12 +44,19 @@ class ArticulosController extends Controller
      */
     public function store(Request $request)
     {
-        //manipulacion de imagenes
-       // $file=$request->all();
-       $file = $request->file('image');
-       //$file=$request->file('image');
-       //$name = 'blogjhon_' . time() .'.' . $file->getClientOriginalExtension();
-        dd($file);
+        if($request->file('image'))
+        { 
+            $file =$request->file('image');
+            $name = 'imagen_'. time() . '.' . $file->getClientOriginalName();
+            //$nameimagen = str_random(30) . '-' . $request->file('image')->getClientOriginalName();
+            $path = public_path() . '/imagenes/articulos';
+            $file->move($path,$name);
+
+        }
+
+        $article=new Articulo ($request->all());
+        dd($article);
+
     }
 
     /**
