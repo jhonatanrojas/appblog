@@ -30,7 +30,7 @@
     </section>
 
   </div>
-
+ 
 
   <!-- Footer -->
   <footer class="px-footer px-footer-bottom">
@@ -38,9 +38,14 @@
   </footer>
 <script src="{{ asset('tema/js/app.js') }}"></script>
 <script src="{{ asset('tema/js/bootstrap.min.js') }}"></script>
-
 <script src="{{ asset('js/pace.min.js') }}"></script>
+<script src="{{ asset('plugin/chosen/chosen.jquery.js') }}"></script>
 <script src="{{ asset('tema/js/pixeladmin.min.js') }}"></script>
-
+<script> 
+    $(".chosen").chosen({
+      max_selected_options: 3
+    });
+  
+      </script>
 </body>
 </html>

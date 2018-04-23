@@ -1,4 +1,5 @@
 <?php
+use App\Http\Middleware\CheckAge;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,23 +19,23 @@ Route::get('/', function () {
 Route::group(['prefix'=>'admin'],function(){
 
 
-    Route::resource('users','UsersController');
+    Route::resource('users','UsersController')->middleware('auth');
 
 Route::get('users/{id}/destroy',[
 'uses'=> 'UsersController@destroy',
 'as' => 'admin.users.destroy'
-]);
+])->middleware('auth');
 
 
 
- Route::resource('categorias','CategoriaController');
+ Route::resource('categorias','CategoriaController')->middleware('auth');
 
  Route::get('categorias/{id}/destroy',[
 'uses'=> 'CategoriaController@destroy',
 'as' => 'admin.categorias.destroy'
 ]);
 
-
+ 
 
 Route::resource('articulos','ArticulosController');
 

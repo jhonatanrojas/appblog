@@ -38,11 +38,11 @@ Articulos
  
             <div class="p-x-1">
      
-      
- 
+       {!! Form::open(['route'=>'articulos.store','method'=>'POST','files'=>true ] )!!}
 <div class="form-group">
   <label> Titulo</label>
-{!! Form::open(['route'=>'articulos.store','method'=>'POST','files'=>true ] )!!}
+  {!! Form::text('titulo', null,['class'=>'form-control','placeholder'=>'titulo'])  !!}
+
 </div>
 
 <div class="form-group">
@@ -58,7 +58,7 @@ Articulos
 
 <div class="form-group">
     <label> Tags</label>
-    {!! Form::select('categoria_id',$tags,null,['class'=>'form-control',
+    {!! Form::select('tags[]',$tags,null,['class'=>'form-control chosen',
     'multiple','required'])  !!}
           </div>
 

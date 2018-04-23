@@ -10,19 +10,26 @@
       <ul class="nav navbar-nav">
        
       </ul>
-
+@if(Auth::user())
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
           {{ Auth::user()->name}}
           </a>
           <ul class="dropdown-menu">
-            <li><a href="#">First item</a></li>
-            <li><a href="#">Second item</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Third item</a></li>
+              <a class="dropdown-item" href="{{ route('logout') }}"
+              onclick="event.preventDefault();
+              document.getElementById('logout-form').submit();">
+              {{ __('Logout') }}
+              </a>
+
+           <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+               @csrf
+           </form>
+        
           </ul>
         </li>
       </ul>
+      @endif
     </div>
   </nav>
