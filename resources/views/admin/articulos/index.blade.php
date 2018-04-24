@@ -37,7 +37,7 @@ POSTS
 
 @section('contect')
  <!-- Custom styling -->
- 
+ <div  class="panel page-blog-posts-item">
   <!-- Post -->
 @foreach ( $articulos as  $articulo)
     
@@ -49,12 +49,14 @@ POSTS
         </div>
   
         <div class="page-blog-posts-image">
-          <img src="assets/demo/blog/1.jpg" alt="">
+            @foreach ($articulo->imagen as  $imagen)
+          <img src="{{ asset('imagenes/articulos/'.$imagen->name.'') }}" alt="">
+          @endforeach
         </div>
   
         <div class="page-blog-posts-content panel-body">
         
-                {{$articulo->contenido}}
+              {!! $articulo->contenido !!}
          
         </div>
   
@@ -77,11 +79,15 @@ POSTS
             <a href="#"><i class="fa fa-comment-o"></i> 7</a>
           </div>
         </div>
+       
+    
       </div>
       @endforeach
-      <!-- / Post -->
-  
-   
+            <!-- / Post -->
+
+      {!! $articulos->render()!!}   
+      <div>
+
   
 @endsection
  

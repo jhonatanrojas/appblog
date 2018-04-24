@@ -24,10 +24,11 @@ class ArticulosController extends Controller
         $articulos->each(function($articulos){
         $articulos->categoria;
          $articulos->user;
+         $articulos->imagen;
      $articulos->tags;
   
         });
-
+ 
  
 
         return view('admin.articulos.index')
@@ -47,7 +48,7 @@ class ArticulosController extends Controller
 
      
 
-       return view('admin.articulos.index')
+       return view('admin.articulos.create')
            -> with('categoria',$categoria)
            ->with('tags',$tags);
 
@@ -77,12 +78,12 @@ class ArticulosController extends Controller
         { 
 
             $file =$request->file('image');
-            $name = 'imagen_'. time() . '.' . $file->getClientOriginalName();
+
         $nameimagen = str_random(30) . '-' . $request->file('image')->getClientOriginalName();
             $path = public_path() . '/imagenes/articulos';
-          $file->move($path,$name);
+          $file->move($path,  $nameimagen);
             $imagen = new Imagen();
-            $imagen->name= $name;
+            $imagen->name=  $nameimagen;
             $imagen-> articulo()->associate($articulo);
             $imagen->save(); 
        
@@ -94,7 +95,7 @@ class ArticulosController extends Controller
       
         if($articulo->save()){ 
 
-            return redirect()->route('articulos.create')->with('msj', 'Articulo ' .   $articulo->titulo. ' Publicado Exitosamente');
+            return redirect()->route('articulos.index')->with('msj', 'Articulo ' .   $articulo->titulo. ' Publicado Exitosamente');
                 }else{
             return back()->with('error', 'Ocurrio un Error al registrar Este Articulo');
                 }

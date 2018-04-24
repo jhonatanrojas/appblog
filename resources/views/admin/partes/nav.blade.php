@@ -49,21 +49,15 @@
           <a href="#"><i class="px-nav-icon ion-chatboxes"></i><span class="px-nav-label">Articulos</span></a>
   
           <ul class="px-nav-dropdown-menu">
-            <li class="px-nav-item"><a href="{{route('articulos.create')}}"><span class=""> <i class="fa fa-address-card" aria-hidden="true">Registrar</i>
+            <li class="px-nav-item"><a href="{{route('articulos.create')}}"><span class=""> <i class="fa fa-address-card" aria-hidden="true">Publicar</i>
+              </span></a></li>
+              <li class="px-nav-item"><a href="{{route('articulos.index')}}"><span class=""> <i class="fa fa-address-card" aria-hidden="true">Ver Publicaciones</i>
               </span></a></li>
   
           </ul>
         </li>
 
-                            <!-- IMAGENES -->   
-      <li class="px-nav-item px-nav-dropdown">
-          <a href="#"><i class="px-nav-icon ion-ios-camera"></i><span class="px-nav-label">Imagenes</span></a>
-  
-          <ul class="px-nav-dropdown-menu">
-            <li class="px-nav-item"><a href="{{route('tags.index')}}"><span class=""> <i class="fa fa-address-card" aria-hidden="true">Registrar</i>
-              </span></a></li>
-  
-          </ul>
+   
         </li>
     </ul>
   </nav>
