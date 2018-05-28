@@ -12,8 +12,9 @@
 */
 
 Route::get('/', function () {
+
     return view('welcome');
-});
+});  
 
 Route::group(['prefix'=>'admin'],function(){
 
@@ -56,3 +57,20 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/registrar', 'RegistrarController@index');
+//Route::get('/municipios/{id}', 'RegistrarController@getMunicipio');
+
+
+Route::get('municipios/',[
+    'uses'=> 'RegistrarController@getMunicipio',
+    'as' => 'municipios'
+    ]);
+    Route::get('Parroquias/',[
+        'uses'=> 'RegistrarController@getParroquias',
+        'as' => 'getParroquias'
+        ]);
+        Route::get('codPostal/',[
+            'uses'=> 'RegistrarController@getCodPostal',
+            'as' => 'getCodPostal'
+            ]);
+    

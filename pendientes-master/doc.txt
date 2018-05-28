@@ -1,0 +1,226 @@
+oom ofrece servicios web en formato json con el motivo de extender la funcionalidad a sus clientes, proveemos un API de conexi�n de ejemplo realizado en PHP y Javascript (jquery) para as� conectarse a los procesos que faciliten la integraci�n entre distintas empresas. A continuaci�n se describen los principales servicios de nuestro API, asi como algunos ejemplos.
+
+Requisitos
+URL de conexi�n. Es otorgado por Zoom International Services.
+Servicios
+getLastTracking
+Definici�n: Retorna el �ltimo estatus de un env�o, seg�n un c�digo de referencia o n�mero de gu�a asociado a un determinado cliente,es decir, retorna el �ltimo estatus en toda la trayectoria del env�o desde que es procesado hasta que es entregado. ver ejemplo
+Par�metros de Entrada:
+tipo_busqueda: Puede ser 1 para busqueda por n�mero de guia, 2 para b�squeda por referencia. NOT NULL
+codigo: N�mero de Guia o referencia del env�o seg�n lo especificado en tipo_busqueda. NOT NULL
+codigo_cliente: El c�digo de cliente (suministrado por Zoom). NOT NULL
+Atributos de salida:
+guia: N�mero con el que identificamos un env�o. NOT NULL
+referencia: C�digo adicional que podr�a identificar a un env�o. NULL
+codigo_cliente: C�digo que identifica al cliente zoom. NOT NULL
+fecha: Fecha del Tracking. NOT NULL
+codigo_estatus: Codigo interno de estatus en el env�o. NOT NULL
+estatus: Siglas del Estatus. NOT NULL
+descripcion_estatus: Descripci�n del estatus en el env�o. NOT NULL
+receptor: Receptor del env�o. Retornar� valor s�lo para los siguientes estatus:
+ENTREGADO AL DESTINO
+ENTREGADO A UN TERCERO
+RETORNADO AL REMITENTE
+hora: Hora de entrega del env�o. Retornar� valor s�lo para los siguientes estatus:
+ENTREGADO AL DESTINO
+ENVIO PERDIDO EN SINIESTRO
+RECLAMO GESTIONADO
+ENTREGADO A UN TERCERO
+RETORNADO AL REMITENTE
+ENVIO PERDIDO
+CASO CERRADO
+DEPOSITO EN TRANSITO
+Ejemplo de respuesta:[{"referencia":"HG4567HSD3","receptor":"ROSABIN","codigo_cliente":"1312","guia":"372623128","fecha":"23-03-2012","codigo_estatus":"7","siglas":"E","descripcion_estatus":"ENTREGADO AL DESTINO","hora":"05:41p.m.","fechapro":"2012-03-23","sello":"SIN SELLO"}]
+
+getTipoTarifa
+Definici�n: Devuelve los tipos de tarifa con su c�digo respectivo para ser llamado en el WebService de C�lculo de Tarifas. La respuesta viene dada en pares "codigo_tarifa":"nombre_tarifa"
+Par�metros de Entrada: ninguno.
+Ejemplo de respuesta: {"1":"COD (Cobro en Destino)","2":"Envios Nacionales"}
+getModalidadTarifa
+Definici�n: Devuelve los tipos de modalidad para el calculo de tarifa con su codigo respectivo para ser llamado en el Web Service del C�lculo de Tarifas. La respuesta viene dada en pares "codigo":"nombre"
+Par�metros de Entrada: ninguno.
+Ejemplo de respuesta: {"1":"RETIRAR POR OFICINA","2":"PUERTA A PUERTA"}
+getCiudades
+Definici�n: Devuelve la lista de ciudades seg�n el servicio que se est� utilizando.
+Par�metros de Entrada:
+filtro: Puede ser origen, cod, nacional � remitente (si no se especifican par�metros se toma origen como valor por defecto)
+"origen": Devuelve las ciudades de origen. (si no se especifican par�metros se toma origen como valor por defecto)
+"cod": Devuelve las Ciudades ZOOM servidas utilizadas para el Servicio COD
+"nacional": Devuelve las Ciudades ZOOM servidas para el servicio de Env�os Nacionales
+"remitente": Devuelve las Ciudades IPOSTEL las cuales son utilizadas por nuestros clientes y aliados para completar la direcci�n postal del remitente en la creaci�n de Gu�as Electr�nicas a trav�s de WebServices.
+Atributos de salida:
+codciudad: C�digo de la Ciudad.
+nombre_ciudad: Nombre de la Ciudad.
+nombre_estado: Nombre del Estado al que pertenece la Ciudad.
+Ejemplo de respuesta: {"codciudad":"25","nombre_ciudad":"ACARIGUA","nombre_estado":"PORTUGUESA"},{"codciudad":"24","nombre_ciudad":"ANACO","nombre_estado":"ANZOATEGUI"},{"codciudad":"68","nombre_ciudad":"BARCELONA","nombre_estado":"ANZOATEGUI"},{"codciudad":"33","nombre_ciudad":"BARINAS","nombre_estado":"BARINAS"},{"codciudad":"44","nombre_ciudad":"BARQUISIMETO","nombre_estado":"LARA"},{"codciudad":"29","nombre_ciudad":"CABIMAS","nombre_estado":"ZULIA"}
+getMunicipios
+Definici�n: Permite obtener informaci�n del Municipio o los Municipios de una Ciudad.
+Par�metros de Entrada:
+codciudad: C�digo identificador de la Ciudad. Para obtener el c�digo hacer uso del WebService getCiudades. NOT NULL
+remitente: Enviar "t" para obtener informaci�n del municipio de una Ciuadad IPOSTEL. Si se deja NULL obtendr� informaci�n del municipio de una Ciudad ZOOM.
+Atributos de salida:
+codigo_municipio: C�digo identificador del Municipio. NOT NULL
+nombre_municipio: Nombre del Municipio. NOT NULL
+Ejemplo de respuesta: [{"codigo_municipio":"515 ","nombre_municipio":"URDANETA"}]
+getParroquias
+Definici�n: Permite obtener informaci�n de la Parroquia o las Parroquias de una Ciudad con su respectivo C�digo Postal.
+Par�metros de Entrada:
+codciudad: C�digo identificador de la Ciudad. Para obtener el c�digo hacer uso del WebService getCiudades. NOT NULL
+codmunicipio: C�digo identificador del Municipio. Para obtener el c�digo hacer uso del WebService getMunicipios. NOT NULL
+remitente: Enviar "t" para obtener informaci�n de la parroquia de una Ciuadad IPOSTEL. Si se deja NULL obtendr� informaci�n de la parroquia de una Ciudad ZOOM.
+Atributos de salida:
+codigo_parroquia: C�digo identificador de la Parroquia. NOT NULL
+nombre_parroquia: Nombre de la Parroquia. NOT NULL
+codigo_postal: C�digo Postal de la Parroquia. NOT NULL
+Ejemplo de respuesta: [{"codigo_parroquia":"51501 ","nombre_parroquia":"CAPITAL URDANETA","codigo_postal":"2301"},{"codigo_parroquia":"51502 ","nombre_parroquia":"NO URBANA LAS PENITAS","codigo_postal":"2334"},{"codigo_parroquia":"51503 ","nombre_parroquia":"NO URBANA SAN FRANCISCO DE CARA","codigo_postal":"2334"},{"codigo_parroquia":"51504 ","nombre_parroquia":"NO URBANA TAGUAY","codigo_postal":"2334"}]
+getOficinas
+Definici�n: Devuelve la lista de oficinas destino de una ciudad y Tipo de Tarifa especificado. La respuesta viene en dada en pares de valores, "codigo_oficina : nombre_oficina"
+Par�metros de Entrada:
+codigo_ciudad_destino: Codigo de la ciudad destino. El codigo debe ser generado por la funcion getCiudades seg�n el tipo de tarifa que se utilice (COD o Nacional). NOT NULL
+tipo_tarifa: Contiene el codigo del tipo de tarifa a consultar (dado por getTipoTarifa). Valores permitidos: 1 para obtener las oficinas que permiten COD. NOT NULL
+Ejemplo de respuesta: {"1171":"INVERSIONES RIO BLANCO, C.A.","308":"LA BOUTIQUE DEL CELULAR YARITAGUA, C.A.","612":"ZOOM AEROPUERTO JACINTO LARA","15":"ZOOM BARQUISIMETO","873":"ZOOM CABUDARE","950":"ZOOM CARORA","1025":"ZOOM CDO BRM"}
+getOficinasGE
+Definici�n: Devuelve la lista de oficinas destino pertencientes a una ciudad. La respuesta var�a seg�n la opci�nes modalidad_tarifa y tipo_tarifa.
+Par�metros de Entrada:
+codigo_ciudad_destino: Codigo de la ciudad destino. El codigo debe ser generado por la funcion getCiudades seg�n el tipo de tarifa que se utilice (COD o Nacional). NOT NULL
+modalidad_tarifa: Contiene el codigo del tipo de modalidad a consultar (dado por getModalidadTarifa).
+tipo_tarifa: Contiene el codigo del tipo de tarifa a consultar (dado por getTipoTarifa). Valores permitidos: 1 para obtener las oficinas que permiten COD. NOT NULL
+Atributos de salida:
+codoficina: C�digo identificador de la Oficina o Aliado ZOOM. NOT NULL
+nombre: Nombre de la Oficina o Aliado ZOOM. NOT NULL
+direccion: Direcci�n de ubicaci�n de la Oficina o Aliado ZOOM. NOT NULL
+Ejemplo de respuesta:[{"codoficina":"47","nombre":"ZOOM BELLO CAMPO","direccion":"FINAL AV. PRINCIPAL DE BELLO CAMPO, QTA GRUPO ZOOM. URB. BELLO CAMPO, (FRENTE A FRIOCAR). CHACAO."},{"codoficina":"539","nombre":"ZOOM C.C. GALERIAS EL PARAISO","direccion":"AV. JOSE ANTONIO PAEZ CENTRO COMERCIAL, GALERIAS EL PARAISO, NIVEL PARAISO, LOCAL 17-A PISO P-A. URBANIZACION EL PARAISO."},{"codoficina":"48","nombre":"ZOOM CDO CATIA","direccion":"AV.PPAL DE ALTAVISTA, A 50 METROS DE LA TEXTILERIA OVEJITA, GALPON GRUPO ZOOM."},{"codoficina":"825","nombre":"ZOOM CHACAITO I","direccion":"AV. TAMANACO, CENTRO COMERCIAL ARTA, PISO 1, LOCAL 1-3. URBANIZACION EL ROSAL"},{"codoficina":"1137","nombre":"ZOOM EL JUNQUITO (INVERSIONES MAR2405)","direccion":"KM. 13, C.C. EL CASTILLO, SOTANO 1, LOCAL 43. EL JUNQUITO."},{"codoficina":"160","nombre":"ZOOM PALO VERDE (NO UTILIZAR)","direccion":"AV. PRINCIPAL DE PALO VERDE, CENTRO COMERCIAL PALO VERDE PLAZA, SEGUNDO NIVEL, LOCAL 13-B."},{"codoficina":"49","nombre":"ZOOM PLAZA VENEZUELA","direccion":"AV. LA SALLE, EDIFICIO LA SALLE, PB LOCALES PB3 Y PB4, PLAZA VENEZUELA."},{"codoficina":"50","nombre":"ZOOM SAN MARTIN","direccion":"AV. SAN MARTIN ENTRE LA 2DA Y 3ERA CALLE LOS MOLINOS URB. LOS MOLINOS, EDIFICIO KOMPLOT, PB (FTE. AL BANCO PROVINCIAL)."},{"codoficina":"433","nombre":"ZOOM TAQUILLA LA URBINA","direccion":"CALLE 7. SECTOR SUR. EDIF. GRUPO ZOOM. URB. LA URBINA."},{"codoficina":"885","nombre":"ZOOM TELARES LOS ANDES","direccion":"AV. PPAL DEL CEMENTERIO, CIUDAD COMERCIAL TELARES LOS ANDES, SECTOR VERDE, LOCAL 24."}]
+CalcularTarifa
+Definici�n: Proceso para calcular tarifas seg�n tipo de tarifa, tipo de servicio,ciudades y valor.ver ejemplo
+Par�metros de Entrada:
+tipo_tarifa: Contiene el numero del tipo de tarifa a calcular (dado por getTipoTarifa). Valores permitidos: 1 para COD, 2 para Envios Nacionales y 3 para Envios Internacionales. NOT NULL
+modalidad_tarifa: Contiene el numero de la modalidad de la tarifa a calcular (dado por getModalidadTarifa). Valores permitidos: 1 para RETIRAR POR OFICINA y 2 para PUERTA A PUERTA. Aplica para Tipo Tarifa COD y NACIONAL. Colocar cero (0) para Tipo Tarifa INTERNACIONALES. NOT NULL
+ciudad_remitente: Codigo de la ciudad del remitente, obtenido por la funcion getCiudades(filtro="origen"). NOT NULL
+ciudad_destinatartio: Codigo de la ciudad del destinatario. El codigo debe ser generado por la funcion getCiudades seg�n el tipo de tarifa que se utilice (COD o NACIONAL). Aplica para Tipo Tarifa COD y NACIONAL. Colocar cero (0) para Tipo Tarifa INTERNACIONALES. NOT NULL
+oficina_retirar: Codigo de la oficina a retirar. El codigo debe ser generado por la funcion getOficinas Ingresar valor solo si el tipo de servicio seleccionado es RETIRAR POR OFICINA. Aplica para Tipo Tarifa COD y NACIONAL. Colocar cero (0) para Tipo Tarifa INTERNACIONALES.
+cantidad_piezas: Cantidad de piezas que contiene el envio. NOT NULL
+peso: Peso bruto del envio (Kg). NOT NULL
+valor_mercancia: Valor de la mercancia (Bs). (Ingresar valor solo para el Tipo de Tarifa COD)
+valor_declarado: Valor declarado de la mercancia (Bs). Mayor a 50. OPCIONAL
+codpais: C�digo del Pa�s Destino. Obtener el c�digo a trav�s de getPaises(). Aplica para Tipo Tarifa INTERNACIONALES. Colocar cero (0) para los Tipos Tarifa COD y NACIONAL. NOT NULL
+tipo_envio: Identificador del Tipo de Env�o. Obtener el c�digo a trav�s de getTipoEnvio(). Aplica para Tipo Tarifa INTERNACIONALES. Colocar cero (0) para los Tipos Tarifa COD y NACIONAL. NOT NULL
+zona_postal: C�digo Postal del Destino Internacional. Aplica para Tipo Tarifa INTERNACIONALES. OPCIONAL
+alto: Referente a las dimensiones del paquete a enviar. (Colocar medidas en cm). Aplica para Tipo Tarifa INTERNACIONALES. Aplica para MERCANCIAS
+ancho: Referente a las dimensiones del paquete a enviar. (Colocar medidas en cm). Aplica para Tipo Tarifa INTERNACIONALES. Aplica para MERCANCIAS
+largo: Referente a las dimensiones del paquete a enviar. (Colocar medidas en cm). Aplica para Tipo Tarifa INTERNACIONALES. Aplica para MERCANCIAS
+Atributos de salida:
+flete: Valor total del Flete. NOT NULL
+seguro: Monto del seguro. NOT NULL
+combustible: Monto de la Recarga de Combustible. Aplica para Tipo Tarifa INTERNACIONALES. NOT NULL
+subtotal: Subtotal Calculado. NOT NULL
+franqueo_postal: Franqueo Postal. NOT NULL
+iva: Valor total del IVA. NOT NULL
+total: Monto total del Env�o. NOT NULL
+Ejemplo de respuesta: {"flete":"778,86","seguro":"3,90","combustible":"140,90","subtotal":"0,00","franqueo_postal":"0,00","iva":"55,42","total":"979,08"}
+getEstatus
+Definici�n: Permite obtener informaci�n de los estatus relacionados a los env�os
+Par�metros de Entrada:
+Ninguno
+Atributos de salida:
+codestatus: C�digo identificador del Estatus. NOT NULL
+siglas: Siglas que identifican al Estatus. NOT NULL
+nombre:Descripci�n del Estatus. NOT NULL
+color:Color del Estatus. NOT NULL
+( Nuevo)
+icono:Iconodel Estatus. NOT NULL
+( Nuevo)
+Ejemplo de respuesta: [ {"codestatus":"57","siglas":"CS","nombre":"BAJO CUSTODIA DE SEGURIDAD","color":"red","icono":"1"}, {"codestatus":"58","siglas":"CS","nombre":"BAJO CUSTODIA DE SEGURIDAD","color":"red","icono":"1"}, {"codestatus":"102","siglas":"BAG","nombre":"CIERRE DE VALIJA","color":"Yellow","icono":"2"}, {"codestatus":"108","siglas":"FR","nombre":"ELABORANDO FACTURA POR GASTOS DE NACIONALIZACION","color":"Yellow","icono":"2"}, {"codestatus":"74","siglas":"CD","nombre":"DESTRUCCION AUTORIZADA POR CLIENTE","color":"Blue","icono":"3"}, {"codestatus":"86","siglas":"DT","nombre":"COMUNIQUESE CON EL 0800-SOS-ZOOM","color":"Blue","icono":"3"} {"codestatus":"7","siglas":"E","nombre":"ENTREGADO","color":"Blue","icono":"3"} ]
+getEstados
+Definici�n: Permite obtener informaci�n de los estados Nacionales e Internacionales en donde ZOOM presta sus servicios. Funciona como complemento para el uso del WebService getCiudadesOfi
+Par�metros de Entrada:
+filtro : C�digo del Pa�s que se obtiene trav�s de getPaises(). Si no se agrega informaci�n en este parametro se mostraran los Estados de Venezuela NULL
+Atributos de salida:
+codestado: C�digo identificador del Estado. NOT NULL
+nombreNombre del Estado. NOT NULL
+Ejemplo de respuesta: [{"codestado":"17","nombre":"AMAZONAS"},{"codestado":"18","nombre":"ANZOATEGUI"},{"codestado":"19","nombre":"APURE"},{"codestado":"20","nombre":"ARAGUA"},{"codestado":"21","nombre":"BARINAS"},{"codestado":"22","nombre":"BOLIVAR"},{"codestado":"23","nombre":"CARABOBO"},{"codestado":"24","nombre":"COJEDES"},{"codestado":"26","nombre":"DELTA AMACURO"},{"codestado":"37","nombre":"DEPENDENCIAS FEDERALES"},{"codestado":"2","nombre":"DISTRITO CAPITAL"},{"codestado":"3","nombre":"FALCON"},{"codestado":"27","nombre":"FLORIDA"},{"codestado":"4","nombre":"GUARICO"},{"codestado":"6","nombre":"LARA"},{"codestado":"7","nombre":"MERIDA"},{"codestado":"8","nombre":"MIRANDA"},{"codestado":"9","nombre":"MONAGAS"},{"codestado":"10","nombre":"NUEVA ESPARTA"},{"codestado":"11","nombre":"PORTUGUESA"},{"codestado":"12","nombre":"SUCRE"},{"codestado":"13","nombre":"TACHIRA"},{"codestado":"14","nombre":"TRUJILLO"},{"codestado":"25","nombre":"VARGAS"},{"codestado":"15","nombre":"YARACUY"},{"codestado":"16","nombre":"ZULIA"}]
+getCiudadesOfi
+Definici�n: Permite obtener informaci�n de las Ciudades Nacionales e Internacionales en donde ZOOM presta sus servicios. Funciona como complemento para el WebService getSucursales
+Par�metros de Entrada:
+codestado: C�digo identificador del Estado. Para obtener el c�digo del Estado hacer uso del WebService getEstados. NOT NULL
+Atributos de salida:
+codciudad: C�digo identificador de la Ciudad. NOT NULL
+nombre: Nombre de la Ciudad. NOT NULL
+Ejemplo de respuesta: [{"codciudad":"3","nombre":"MARACAY"},{"codciudad":"86","nombre":"CAGUA"},{"codciudad":"244","nombre":"LA VICTORIA"},{"codciudad":"404","nombre":"TURMERO"}]
+getSucursales
+Definici�n: Permite obtener informaci�n de las Sucursales Nacionales e Internacionales (Oficinas y Aliados ZOOM). ver ejemplo
+Par�metros de Entrada:
+codciudad: C�digo identificador de la Ciudad. Para obtener el c�digo hacer uso del WebService getCiudadesOfi. NOT NULL
+Atributos de salida:
+codoficina: C�digo identificador de la Oficina o Aliado ZOOM. NOT NULL
+nombre: Nombre de la Oficina o Aliado ZOOM. NOT NULL
+direccion: Direcci�n de ubicaci�n de la Oficina o Aliado ZOOM. NOT NULL
+latitud: Ubicaci�n geogr�fica de la Oficina o Aliado ZOOM. NOT NULL
+longitud: Ubicaci�n geogr�fica de la Oficina o Aliado ZOOM. NOT NULL
+longitud: Ubicaci�n geogr�fica de la Oficina o Aliado ZOOM. NOT NULL
+telefonos: Tel�fonos de la Oficina o Aliado ZOOM. NOT NULL
+horarios: Horarios de Atenci�n de la Oficina o Aliado ZOOM. Tomar en consideraci�n que �ste campo es un arreglo. Ej: "horarios":[{"dia":"Jueves","hora":"08:00 AM - 12:00 PM - 02:00 PM - 06:00 PM"},{"dia":"Viernes","hora":"08:00 AM - 12:00 PM - 02:00 PM - 06:00 PM"},{"dia":"Sabado","hora":"08:00 AM - 05:00 PM"}]. NOT NULL
+servicios: Distintos servicios que son prestados en cada Oficina o Aliado ZOOM. Tomar en consideraci�n que �ste campo es un arreglo. Ej: "servicios":[{"codservicio":"1","nombre":"Env�os"},{"codservicio":"2","nombre":"Publicaci�n"},{"codservicio":"3","nombre":"Casilleros"},{"codservicio":"4","nombre":"Western Union"},{"codservicio":"5","nombre":"Recepci�n"}]. NOT NULL
+cod: Indicador de si el Servicio Cobro en Destino (COD) es prestado en la Oficina o Aliado ZOOM. Retorna "t" si es verdadero o "f" si es falso. NOT NULL
+retirarofi: Indicador de si el Servicio Retirar por Oficina es prestado en la Oficina o Aliado ZOOM. Retorna la frase reservada"Retirar por Oficina" si el servicio es prestado o "f" si es falso. NOT NULL
+Ejemplo de respuesta: [{"codoficina":"765","nombre":"ZOOM LA VICTORIA","direccion":"CALLE RIVAS DAVILA, C.C. VICTORIA CENTER, PRIMERA ETAPA, NIVEL PLANTA BAJA, LOCAL A-6","latitud":"0.000000","longitud":"0.000000","telefonos":"0-800-SOS-ZOOM (0-800-767-79666)","horarios":[{"dia":"Jueves","hora":"08:00 AM - 12:00 PM - 02:00 PM - 06:00 PM"},{"dia":"Viernes","hora":"08:00 AM - 12:00 PM - 02:00 PM - 06:00 PM"},{"dia":"Sabado","hora":"08:00 AM - 05:00 PM"}],"servicios":[{"codservicio":"1","nombre":"Env�os"},{"codservicio":"2","nombre":"Publicaci�n"},{"codservicio":"3","nombre":"Casilleros"},{"codservicio":"4","nombre":"Western Union"},{"codservicio":"5","nombre":"Recepci�n"}],"cod":"f","retirarofi":"Retirar por Oficina"},{"codoficina":"389","nombre":"CENTRO CANTV. (LA VICTORIA)","direccion":"AV. VICTORIA. EDIF. MESCHIARI. P.B. LOCAL 1. SECTOR SOCO. URB. BOLIVAR SUR.","latitud":null,"longitud":null,"telefonos":"0-800-SOS-ZOOM (0-800-767-79666)","horarios":"NULL","servicios":[{"codservicio":"1","nombre":"Env�os"},{"codservicio":"2","nombre":"Publicaci�n"},{"codservicio":"3","nombre":"Casilleros"},{"codservicio":"5","nombre":"Recepci�n"}],"cod":"f","retirarofi":"f"}]
+getTipoEnvio
+Definici�n: Retorna los Tipos de Env�os permitidos en Zoom International Services, C.A.
+Par�metros de Entrada:
+ninguno
+Atributos de salida:
+codigo_tipo_envio:nombre_tipo_envio
+Ejemplo de respuesta:{"D":"DOCUMENTO","M":"MERCANCIA"}
+getPaises
+Definici�n: Retorna los C�digos de Pa�ses a los que Zoom International Services, C.A. realiza env�os.
+Par�metros de Entrada:
+tipo: Identifica el tipo de consulta que se va a realizar. Si desea ver solo los paises que tiene oficina ZOOM debe colocar = 1 NULL
+Atributos de salida:
+codpais: C�digo identificador del Pa�s. NOT NULL
+nombre_pais: Nombre del Pa�s. NOT NULL
+Ejemplo de respuesta:[{"codpais":"83","nombre_pais":"AFGANISTAN"},{"codpais":"141","nombre_pais":"ALBANIA"},{"codpais":"39","nombre_pais":"ALEMANIA"},{"codpais":"142","nombre_pais":"ALGERIA"},{"codpais":"180","nombre_pais":"AMERICAN SAMOA"},{"codpais":"143","nombre_pais":"ANDORRA"},{"codpais":"144","nombre_pais":"ANGOLA"},{"codpais":"145","nombre_pais":"ANGUILA"},{"codpais":"4","nombre_pais":"ANTIGUA"},{"codpais":"80","nombre_pais":"ARABIA SAUDI"}]
+getTipoRutaEnvio
+Definici�n: Retorna el Tipo de Ruta de un env�o de acuerdo a una ciudad origen y una ciudad destino.
+Par�metros de Entrada:
+codciudadori: C�digo identificador de la Ciudad Origen. Para obtener el c�digo hacer uso del WebService getCiudades() Filtro "origen". NOT NULL
+codciudaddes: C�digo identificador de la Ciudad Destino. Para obtener el c�digo hacer uso del WebService getCiudades() Filtro "cod" o "nacional". NOT NULL
+Atributos de salida:
+N�mero identificador de la ruta. 1 - Para env�os Metropolitanos. De resto, env�os Nacionales.
+Ejemplo de respuesta:["1"]
+Ejemplos
+Ejemplo Javascript 1 Utilizaci�n del API javascript para conectarse a los servicios (requiere jQuery)
+Ejemplo API PHP Ejemplo de utilizacion del proxy en PHP para obtener las Ciudades que permiten el Servicio COD.
+Ejemplo .NET Ejemplo b�sico para consumir WS a trav�s de Visual Studio 2010.
+ 
+
+ 
+
+Ir al cielo
+
+
+Llamada a servicio con el API de conexión en PHP (Requiere CURL, JSON instalado en el servidor).
+Volver al Indice
+En este ejemplo intentamos obtener las ciudades para envio COD (en formato json). Para ello creamos una instancia del cliente proxy ZoomJsonService con el url respectivo, luego hacemos la llamada con el método call y agregamos los parametros necesarios (dentro de un arreglo), asi como las funciones (opcionales) para manejo de error y comunicacion exitosa.
+
+1.) Crea un archivo.php con el siguiente contenido:
+include (" class.zoom.json.services.php") // Implementacion del objeto proxy (PHP4)
+include (" function.json_encode.php") // para php4 la funcion no existe
+
+// url para conectarse al servicio
+    $url = "http://..................."; 
+     
+    $cliente = new ZoomJsonService($url); 
+    $cliente->call("getCiudades", array("filtro"=>"cod"), "llamadaExitosa", "llamadaError"); 
+    function llamadaExitosa($result) 
+    { 
+        print_r( json_encode($result)); 
+    }     
+    function llamadaError($error) 
+    { 
+        print_r($error);
+    } 
+     
+2.) Descarga los siguientes archivos y colocalos en el mismo directorio que el archivo.php creado anteriormente:
+
+class.zoom.json.services.php, function.json_encode.php, class.json.php4.php
+
+La Respuesta debe ser la siguiente:
