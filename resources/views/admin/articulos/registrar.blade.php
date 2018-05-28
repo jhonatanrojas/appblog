@@ -416,8 +416,8 @@ function elegircodpostal(codpostal,codmun,codestado)
                               var codedo= $('#estado').val();
            elegircodpostal(codpostal,codparroquia,codedo);
 
-            elegirparroquia(codparroquia);
-}, 3000);
+            elegirparroquia(codparroquia); 
+},2300);
   
   
         });
